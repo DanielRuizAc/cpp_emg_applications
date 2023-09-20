@@ -1,0 +1,10 @@
+.vs
+Build
+x64
+Example
+*/bin/
+*/obj/
+*/PreBuild.cmd
+*/PostBuild.cmd
+*.vcxproj.filters
+*.vcxproj.user
