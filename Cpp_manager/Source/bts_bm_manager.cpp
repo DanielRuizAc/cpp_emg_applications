@@ -185,6 +185,7 @@ bool bts_bm_manager::Stop() {
 
 
 void bts_bm_manager::Read(long lastIndex, int nSamples) {
+	printf("----------------------------------------------");
 	int queueSize = 0;
 	bts_biodaq_core::IChannelPtr channel;
 	for (int q = 0; q < this->protocolItems; q++)

@@ -1,6 +1,10 @@
 // Include standard libraries
 #include "stdafx.h"
 #include <process.h>
+#include <vector>
+
+#include "MatlabEngine.hpp"
+#include "MatlabDataArray.hpp"
 
 // Include BioDAQ template libraries (registration has been done!)
 
@@ -66,6 +70,14 @@ int _tmain(int argc, _TCHAR* argv[])
 		return 0;
 	}
 
+	//errCode = ptrBioDAQ->Stop();
+	int count_stop = 0;
+	//while (BioDAQExitStatus_Success != errCode && count_stop < 5)
+	//{
+	//	printf("Failed: unable to stop BioDAQ device\n");
+	//	count_stop++;
+	//}
+
 	// Get the list of BMs 
 	bmViewList = ptrBioDAQ->BmsView;
 	// Do some check: number of BMs
@@ -87,7 +99,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	// Get the BioDAQ state
 	bts_biodaq_core::BioDAQState bioDAQState = ptrBioDAQ->State;
-
+	if (bioDAQState==BioDAQState_Ready) printf("ptrBioDAQ state correct");
 	// Set up the channels
 	IChannelViewListPtr chViewList;
 	bts_biodaq_core::IChannelPtr  channel;
@@ -100,7 +112,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	chViewList->SetEMGChannelsRangeCode(EMGChannelRangeCodes_Gain1_5mV);   // EMG channel range
 	chViewList->SetEMGChannelsSamplingRate(SamplingRate_Rate1KHz);         // Sampling rate: 1 kHz
 	chViewList->SetEMGChannelsCodingType(CodingType_Raw);
-	chViewList->SetEMGChannelsCompression(true);                           // Coding type: ADPCM
+	chViewList->SetEMGChannelsCompression(false);                           // Coding type: ADPCM
 
 	IQueueSinkPtr g_ptrQueueSink;             // Queue sink interface.
 
@@ -130,6 +142,10 @@ int _tmain(int argc, _TCHAR* argv[])
 		return 0;
 	}
 
+	std::unique_ptr<matlab::engine::MATLABEngine> matlabPtr = matlab::engine::startMATLAB();
+	matlab::data::ArrayFactory factory;
+	vector<double> yvals(0);
+
 	printf("Starting BioDAQ device...\n");
 
 	// Start the acquisition
@@ -150,13 +166,14 @@ int _tmain(int argc, _TCHAR* argv[])
 		return 0;
 	}
 
+
 	// Sleep a bit
-	Sleep(2000);
+	Sleep(420);
 
 	int P = 0;
 	int NSamples = 100;
 
-	for (int loop = 0; loop < 40; loop++) {
+	for (int loop = 0; loop < 200; loop++) {
 
 		int queueSize = 0;
 		for (int q = 0; q < protocolItems; q++)
@@ -199,8 +216,10 @@ int _tmain(int argc, _TCHAR* argv[])
 				);
 
 				LeaveCriticalSection(&g_csObject);
-
-				if (SinkExitStatus_Success == exitStatus && channelIndex == 0 && sample == 0 && value != 0)
+				if (SinkExitStatus_Success == exitStatus ) {
+					yvals.push_back(value);
+				}
+				if (SinkExitStatus_Success == exitStatus && sample == 0 && value != 0)
 				{
 					// value is recovery from queue
 					// print value in the console
@@ -209,20 +228,32 @@ int _tmain(int argc, _TCHAR* argv[])
 			}
 		}
 		P = P + NSamples;
-		Sleep(200);
+		Sleep(100);
 	}
 
 	printf("Stopping BioDAQ device...\n");
 
 	// Stop acquisition
 	errCode = ptrBioDAQ->Stop();
-	if (BioDAQExitStatus_Success != errCode)
+	count_stop = 0;
+	while (BioDAQExitStatus_Success != errCode && count<5)
 	{
 		printf("Failed: unable to stop BioDAQ device\n");
+		count_stop++;
 	}
 
 	// Wait ... just a bit
 	Sleep(250);
+
+	// Create arguments for the call to Matlab's plot function
+	std::vector<matlab::data::Array> args({
+		factory.createArray({ yvals.size(), 1 }, yvals.begin(), yvals.end()),
+		factory.createCharArray(std::string("r-"))
+		});
+	// Invoke the plot command
+	matlabPtr->feval(u"plot", args);
+
+	Sleep(10000);
 
 	bioDAQState = ptrBioDAQ->State;
 	if (BioDAQState_Ready != bioDAQState)
