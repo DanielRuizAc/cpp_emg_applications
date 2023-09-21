@@ -1,6 +1,7 @@
 #pragma once
 #include "stdafx.h"
 #include <process.h>
+#include <vector>
 
 // Include BioDAQ template libraries (registration has been done!)
 
@@ -17,7 +18,7 @@ using namespace bts_biodaq_drivers;
 struct sample {
 	__int64 index;
 	float value;
-	ExitStatus status;
+	SinkExitStatus status;
 };
 
 
@@ -46,7 +47,7 @@ public:
 	bool Stop();
 
 	void Read(long lastIndex ,int nSamples);
-
+	vector<sample> Read_vector(long lastIndex, int nSamples, int chan);
 	
 };
 

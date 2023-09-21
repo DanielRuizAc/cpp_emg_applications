@@ -234,3 +234,58 @@ void bts_bm_manager::Read(long lastIndex, int nSamples) {
 	}
 
 }
+
+vector<sample> bts_bm_manager::Read_vector(long lastIndex, int nSamples, int chan) {
+	int queueSize = 0;
+	bts_biodaq_core::IChannelPtr channel;
+	vector<sample> ysamp(0);
+	for (int q = 0; q < this->protocolItems; q++)
+	{
+		// retrieve the size of current queue
+		EnterCriticalSection(&(this->g_csObject));
+		queueSize = g_ptrQueueSink->QueueSize(q);
+		LeaveCriticalSection(&(this->g_csObject));
+
+		if (0 == queueSize) continue;
+
+		channel = this->chViewList->GetItem(q);
+		if (VARIANT_FALSE == channel->Active) continue;
+
+		int channelIndex = channel->ProtocolChannelIndex;
+		if (channelIndex < 0 || channelIndex > protocolItems) continue;
+
+		for (int samp = 0; samp < nSamples; samp++)
+		{
+			__int64 Si = lastIndex + samp;
+			float value = 0.0f;
+			// get sample value
+			EnterCriticalSection(&(this->g_csObject));
+			SinkExitStatus exitStatus = SinkExitStatus_Success;
+
+			exitStatus = this->g_ptrQueueSink->Read(
+				channelIndex,    // channel index
+				Si,              // sample index 
+				&value           // recovery sample value
+			);
+
+			LeaveCriticalSection(&(this->g_csObject));
+
+			if (SinkExitStatus_Success == exitStatus && channelIndex == chan)
+			{
+				// value is recovery from queue
+				// print value in the console
+				ysamp.push_back(sample{ Si, value, exitStatus });
+				if (samp == 0 && value != 0)
+				{
+					printf("\tChannel [%d], sample index: %d, value: %f V\n", channelIndex, (int)Si, value);
+					printf("Queue size: %d \n", queueSize);
+				}
+			}
+			else if (SinkExitStatus_Success != exitStatus) {
+				printf("error_%d_____________********************************************************************************\n", (int)Si);
+			}
+		}
+
+	}
+	return ysamp;
+}
