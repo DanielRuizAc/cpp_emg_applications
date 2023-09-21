@@ -16,3 +16,4 @@ For each case, and change the application name at line:
 set TARGET_NAME=Cpp_manager
 ```
 
+https://it.mathworks.com/matlabcentral/answers/602074-how-to-plot-std-vector-data-from-c-program-to-figure-window-using-engine-api-for-c

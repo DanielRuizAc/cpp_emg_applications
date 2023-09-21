@@ -121,6 +121,25 @@ int _tmain(int argc, _TCHAR* argv[])
 	//IQueueSinkPtr ptrQueueSink;
 	pDataSinkTmp->QueryInterface(__uuidof(IQueueSink), (void**)&g_ptrQueueSink);
 
+	std::unique_ptr<matlab::engine::MATLABEngine> matlabPtr = matlab::engine::startMATLAB();
+	matlab::data::ArrayFactory factory;
+	vector<double> yvals(0);
+	yvals.push_back(0.0);
+	vector<double> xvals(0);
+
+	Sleep(5000);
+
+	// Create arguments for the call to Matlab's plot function
+	std::vector<matlab::data::Array> args({
+		factory.createArray({ yvals.size(), 1 }, yvals.begin(), yvals.end()),
+		factory.createCharArray(std::string("r-"))
+		});
+	// Invoke the plot command
+	matlab::data::Array line = matlabPtr->feval(u"plot", args);
+
+	yvals.pop_back();
+
+
 
 	printf("Arming BioDAQ device...\n");
 
@@ -141,10 +160,6 @@ int _tmain(int argc, _TCHAR* argv[])
 
 		return 0;
 	}
-
-	std::unique_ptr<matlab::engine::MATLABEngine> matlabPtr = matlab::engine::startMATLAB();
-	matlab::data::ArrayFactory factory;
-	vector<double> yvals(0);
 
 	printf("Starting BioDAQ device...\n");
 
@@ -218,6 +233,7 @@ int _tmain(int argc, _TCHAR* argv[])
 				LeaveCriticalSection(&g_csObject);
 				if (SinkExitStatus_Success == exitStatus ) {
 					yvals.push_back(value);
+					xvals.push_back(Si * 0.001);
 				}
 				if (SinkExitStatus_Success == exitStatus && sample == 0 && value != 0)
 				{
@@ -227,6 +243,24 @@ int _tmain(int argc, _TCHAR* argv[])
 				}
 			}
 		}
+		/*
+		std::vector<matlab::data::Array> args_realt({
+			line,
+			factory.createArray({ yvals.size(), 1 }, yvals.begin(), yvals.end())
+			});
+		matlabPtr->feval(u"set", args_realt);
+		*/
+
+		std::vector<matlab::data::Array> args_realt({
+			line,
+			factory.createCharArray(std::string("YData")),
+			factory.createArray({ yvals.size(), 1 }, yvals.begin(), yvals.end()),
+			factory.createCharArray(std::string("XData")),
+			factory.createArray({ xvals.size(), 1 }, xvals.begin(), xvals.end())
+			});
+		matlabPtr->feval(u"set", args_realt);
+		matlabPtr->eval(u"drawnow");
+
 		P = P + NSamples;
 		Sleep(100);
 	}
@@ -244,14 +278,6 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	// Wait ... just a bit
 	Sleep(250);
-
-	// Create arguments for the call to Matlab's plot function
-	std::vector<matlab::data::Array> args({
-		factory.createArray({ yvals.size(), 1 }, yvals.begin(), yvals.end()),
-		factory.createCharArray(std::string("r-"))
-		});
-	// Invoke the plot command
-	matlabPtr->feval(u"plot", args);
 
 	Sleep(10000);
 
@@ -287,5 +313,29 @@ int _tmain(int argc, _TCHAR* argv[])
 	CoUninitialize();
 
 	DeleteCriticalSection(&g_csObject);
+	
+	/*
+	vector<double> yvals2(0);
+	vector<double> xvals(0);
+	for (int i = 0; i < (((int)yvals.size())/100)-1; i++) {
+		for (int j = 0; j < 100; j++) {
+			yvals2.push_back(yvals[i*100 + j]);
+			xvals.push_back(i * 100 + j);
+		}
+		std::vector<matlab::data::Array> args_realt({
+			line,
+			factory.createCharArray(std::string("YData")),
+			factory.createArray({ yvals2.size(), 1 }, yvals2.begin(), yvals2.end()),
+			factory.createCharArray(std::string("XData")),
+			factory.createArray({ xvals.size(), 1 }, xvals.begin(), xvals.end())
+			});
+		matlabPtr->feval(u"set", args_realt);
+		matlabPtr->eval(u"drawnow");
+
+		P = P + NSamples;
+		Sleep(100);
+	}
+	*/
 	return 0;
+
 }
