@@ -28,6 +28,7 @@ private:
 	IBioDAQPtr ptrBioDAQ;
 	IBMViewListPtr bmViewList;
 	IChannelViewListPtr chViewList;
+	IPortListPtr ptrPortList;
 	IPortCOMPtr ptrCOMPort;
 	long protocolItems;
 	IQueueSinkPtr g_ptrQueueSink;             // Queue sink interface.
@@ -42,7 +43,10 @@ public:
 	bool ArmStart();
 
 	void Clean();
-	void StopClean();
+	bool Stop();
+
+	void Read(long lastIndex ,int nSamples);
+
 	
 };
 

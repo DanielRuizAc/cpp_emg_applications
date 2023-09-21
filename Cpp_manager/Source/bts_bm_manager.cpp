@@ -15,6 +15,7 @@ bts_bm_manager::bts_bm_manager() {
 	this->g_ptrQueueSink =nullptr;
 	this->bmViewList = nullptr;
 	this->chViewList = nullptr;
+	this->ptrPortList = nullptr;
 	this->protocolItems = 0L;
 }
 
@@ -32,19 +33,19 @@ bool bts_bm_manager::ConnectionCOMPort(int comNum, BaudRate baud) {
 	this->ptrCOMPort->PutBaudRate(baud);
 
 	// Create the ports List
-	IPortListPtr ptrPortList(__uuidof(PortList));
+	this->ptrPortList = IPortListPtr(__uuidof(PortList));
 
 	// Get the IPort interface of the ptrCOMPort
 	IPort* pPort;
 	this->ptrCOMPort.QueryInterface(__uuidof(IPort), &pPort);
 
 	// Insert the new COM port at first position (position zero)
-	ptrPortList->Insert(0, pPort);
+	this->ptrPortList->Insert(0, pPort);
 	
 	// Instantiate the BioDAQ 
 	this->ptrBioDAQ = IBioDAQPtr(__uuidof(BioDAQ));
 
-	BioDAQExitStatus errCode = this->ptrBioDAQ->Init(ptrPortList);
+	BioDAQExitStatus errCode = this->ptrBioDAQ->Init(this->ptrPortList);
 
 	if (BioDAQExitStatus_Success != errCode)
 	{
@@ -100,7 +101,7 @@ bool bts_bm_manager::ConfigureAquisition(CodingType type, bool compression, EMGC
 
 
 void bts_bm_manager::ObtainQueueSink() {
-	for (long i; i < this->ptrBioDAQ->Sinks->GetCount(); i++) {
+	for (long i=0; i < this->ptrBioDAQ->Sinks->GetCount(); i++) {
 		IBaseSinkPtr g_ptrBaseSinkAux;             // Queue sink interface.
 
 		// Get the specialized IQueueSink interface from generic IDataSink interface
@@ -113,4 +114,122 @@ void bts_bm_manager::ObtainQueueSink() {
 	}
 }
 
-bool ArmStart();
+bool bts_bm_manager::ArmStart() {
+	this->ObtainQueueSink();
+	printf("Arming BioDAQ device...\n");
+	BioDAQExitStatus errCode = ptrBioDAQ->Arm();
+	if (BioDAQExitStatus_Success != errCode)
+	{
+		printf("Failed: unable to arm BioDAQ device\n");
+		printf("Press a key to exit...\n");
+		_gettch();
+
+		// roll-back
+		this->ptrBioDAQ->Reset();
+		this->ptrBioDAQ->Release();
+		this->bmViewList->Release();
+		this->chViewList->Release();
+		this->ptrCOMPort->Release();
+
+		return false;
+	}
+
+	printf("Starting BioDAQ device...\n");
+
+	// Start the acquisition
+	errCode = ptrBioDAQ->Start();
+	if (BioDAQExitStatus_Success != errCode)
+	{
+		printf("Failed: unable to arm BioDAQ device\n");
+		printf("Press a key to exit...\n");
+		_gettch();
+
+		// roll-back
+		this->Clean();
+
+		return false;
+	}
+
+	return true;
+}
+
+
+void bts_bm_manager::Clean() {
+	// Release BMs view list
+	this->bmViewList->Release();
+	// Release channels view list
+	this->chViewList->Release();
+
+	// Reset BioDAQ
+	this->ptrBioDAQ->Reset();
+
+	// Release BioDAQ
+	this->ptrBioDAQ->Release();
+
+	// Clear ports list
+	this->ptrPortList->Clear();
+	// Release COM port
+	this->ptrCOMPort->Release();
+}
+
+
+bool bts_bm_manager::Stop() {
+	BioDAQExitStatus errCode = ptrBioDAQ->Stop();
+	if (BioDAQExitStatus_Success != errCode)
+	{
+		printf("Failed: unable to stop BioDAQ device\n");
+		return false;
+	}
+	return true;
+}
+
+
+void bts_bm_manager::Read(long lastIndex, int nSamples) {
+	int queueSize = 0;
+	bts_biodaq_core::IChannelPtr channel;
+	for (int q = 0; q < this->protocolItems; q++)
+	{
+		// retrieve the size of current queue
+		EnterCriticalSection(&(this->g_csObject));
+		queueSize = g_ptrQueueSink->QueueSize(q);
+		LeaveCriticalSection(&(this->g_csObject));
+
+		if (0 == queueSize) continue;
+
+		channel = this->chViewList->GetItem(q);
+		if (VARIANT_FALSE == channel->Active) continue;
+
+		int channelIndex = channel->ProtocolChannelIndex;
+		if (channelIndex < 0 || channelIndex > protocolItems) continue;
+
+		for (int sample = 0; sample < nSamples; sample++)
+		{
+			__int64 Si = lastIndex + sample;
+			float value = 0.0f;
+			// get sample value
+			EnterCriticalSection(&(this->g_csObject));
+			SinkExitStatus exitStatus = SinkExitStatus_Success;
+
+			exitStatus = this->g_ptrQueueSink->Read(
+				channelIndex,    // channel index
+				Si,              // sample index 
+				&value           // recovery sample value
+			);
+
+			LeaveCriticalSection(&(this->g_csObject));
+
+			if (SinkExitStatus_Success == exitStatus && channelIndex == 0 && sample == 0 && value != 0)
+			{
+				// value is recovery from queue
+				// print value in the console
+				printf("\tChannel [%d], sample index: %d, value: %f V\n", channelIndex, (int)Si, value);
+				printf("Queue size: %d \n", queueSize);
+			}
+			else if (SinkExitStatus_Success != exitStatus) {
+				printf("error_%d_____________********************************************************************************\n", (int)Si);
+			}
+		}
+
+	}
+
+}
