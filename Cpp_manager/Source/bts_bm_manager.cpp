@@ -248,6 +248,8 @@ vector<sample> bts_bm_manager::Read_vector(long lastIndex, int nSamples, int cha
 
 		if (0 == queueSize) continue;
 
+		if (channel != chan) continue;
+
 		channel = this->chViewList->GetItem(q);
 		if (VARIANT_FALSE == channel->Active) continue;
 

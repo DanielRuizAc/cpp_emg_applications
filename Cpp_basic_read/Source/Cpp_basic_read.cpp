@@ -103,7 +103,28 @@ int _tmain(int argc, _TCHAR* argv[])
 	// Set up the channels
 	IChannelViewListPtr chViewList;
 	bts_biodaq_core::IChannelPtr  channel;
+	printf("*+++++++++++++++++++++++++++++++++++++++++++++\n");
 
+	IProcessorPtr ptrEMAProcessor(__uuidof(RMSProcessor));
+	if (ptrEMAProcessor->GetType() == ProcessorType_EMA) printf("It is correct\n\n");
+
+	ISinksFactory* ptrSinksFactory = ptrBioDAQ->SinksFactory; 
+	IDataSink* pDataSink = ptrSinksFactory->CreateSink(bts_biodaq_core::SinkType::SinkType_Math);
+	pDataSink->Init();
+	printf("-----------------------------------------------\n");
+
+	IMathSinkPtr ptrMathSink;
+	pDataSink->QueryInterface(__uuidof(IMathSink), (void**)&ptrMathSink);
+	ptrMathSink->SetProcessor(ptrEMAProcessor, 5);
+	printf("-----------------------------------------------\n");
+
+	IQueueSinkPtr ptrMathQueueSink;
+	//ptrMathSink->QueryInterface(__uuidof(IQueueSink), (void**)&ptrMathQueueSink);
+	printf("-----------------------------------------------\n");
+
+	// printf("NTimePeriods of EMA processor interface %d", ptrEMAProcessor->NTimePeriods);
+	HRESULT hResult = ptrBioDAQ->Sinks->Add(pDataSink);
+	printf("-----------------------------------------------\n");
 	// Get the channels view list
 	chViewList = ptrBioDAQ->ChannelsView;
 	long nChannels = chViewList->Count;
@@ -120,7 +141,10 @@ int _tmain(int argc, _TCHAR* argv[])
 	IDataSink* pDataSinkTmp = ptrBioDAQ->Sinks->GetItem(0);
 	//IQueueSinkPtr ptrQueueSink;
 	pDataSinkTmp->QueryInterface(__uuidof(IQueueSink), (void**)&g_ptrQueueSink);
-
+	
+	IDataSink* pDataSinkTmp2 = ptrBioDAQ->Sinks->GetItem(1);
+	if (pDataSinkTmp2)
+	pDataSinkTmp->QueryInterface(__uuidof(IQueueSink), (void**)&ptrMathQueueSink);
 	std::unique_ptr<matlab::engine::MATLABEngine> matlabPtr = matlab::engine::startMATLAB();
 	matlab::data::ArrayFactory factory;
 	vector<double> yvals(0);
@@ -128,7 +152,6 @@ int _tmain(int argc, _TCHAR* argv[])
 	vector<double> xvals(0);
 
 	Sleep(5000);
-
 	// Create arguments for the call to Matlab's plot function
 	std::vector<matlab::data::Array> args({
 		factory.createArray({ yvals.size(), 1 }, yvals.begin(), yvals.end()),
@@ -220,6 +243,10 @@ int _tmain(int argc, _TCHAR* argv[])
 			{
 				__int64 Si = P + sample;
 				float value = 0.0f;
+
+				__int64 Si2 = P + sample;
+				float value2 = 0.0f;
+
 				// get sample value
 				EnterCriticalSection(&g_csObject);
 				SinkExitStatus exitStatus = SinkExitStatus_Success;
@@ -231,8 +258,19 @@ int _tmain(int argc, _TCHAR* argv[])
 				);
 
 				LeaveCriticalSection(&g_csObject);
+				
 				if (SinkExitStatus_Success == exitStatus ) {
-					yvals.push_back(value);
+
+					EnterCriticalSection(&g_csObject);
+					SinkExitStatus exitStatus = SinkExitStatus_Success;
+
+					exitStatus = ptrMathQueueSink->Read(
+						channelIndex,    // channel index
+						Si2,              // sample index 
+						&value2           // recovery sample value
+					);
+					LeaveCriticalSection(&g_csObject);
+					yvals.push_back(value2);
 					xvals.push_back(Si * 0.001);
 				}
 				if (SinkExitStatus_Success == exitStatus && sample == 0 && value != 0)
@@ -240,16 +278,10 @@ int _tmain(int argc, _TCHAR* argv[])
 					// value is recovery from queue
 					// print value in the console
 					printf("\tChannel [%d], sample index: %d, value: %f V\n", channelIndex, (int)Si, value);
+					printf("\tChannel [%d], sample index: %d, value: %f V\n\n", channelIndex, (int)Si2, value2);
 				}
 			}
 		}
-		/*
-		std::vector<matlab::data::Array> args_realt({
-			line,
-			factory.createArray({ yvals.size(), 1 }, yvals.begin(), yvals.end())
-			});
-		matlabPtr->feval(u"set", args_realt);
-		*/
 
 		std::vector<matlab::data::Array> args_realt({
 			line,
@@ -280,7 +312,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	Sleep(250);
 
 	Sleep(10000);
-
+	
 	bioDAQState = ptrBioDAQ->State;
 	if (BioDAQState_Ready != bioDAQState)
 	{

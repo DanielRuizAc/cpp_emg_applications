@@ -35,10 +35,14 @@ int _tmain(int argc, _TCHAR* argv[])
 	vector<__int64> xvals(0);
 	vector<float> yvals(0);
 
+	vector<__int64> xvals2(0);
+	vector<float> yvals2(0);
+
 	std::unique_ptr<matlab::engine::MATLABEngine> matlabPtr = matlab::engine::startMATLAB();
 	matlab::data::ArrayFactory factory;
 
 	yvals.push_back(0.0f);
+	yvals2.push_back(0.0f);
 	Sleep(5000);
 	// Create arguments for the call to Matlab's plot function
 	std::vector<matlab::data::Array> args({
@@ -46,9 +50,19 @@ int _tmain(int argc, _TCHAR* argv[])
 		factory.createCharArray(std::string("r-"))
 		});
 	// Invoke the plot command
+	matlabPtr->eval(u"figure");
 	matlab::data::Array line = matlabPtr->feval(u"plot", args);
 
+	std::vector<matlab::data::Array> args2({
+		factory.createArray({ yvals2.size(), 1 }, yvals2.begin(), yvals2.end()),
+		factory.createCharArray(std::string("b-"))
+		});
+	// Invoke the plot command
+	matlabPtr->eval(u"figure");
+	matlab::data::Array line2 = matlabPtr->feval(u"plot", args2);
+
 	yvals.pop_back();
+	yvals2.pop_back();
 
 	printf("Configuring the parameters of the data aquisition\n");
 	if (!btsManager.ConfigureAquisition(CodingType_Raw, false, EMGChannelRangeCodes_Gain1_5mV, 50)) {
@@ -90,6 +104,25 @@ int _tmain(int argc, _TCHAR* argv[])
 		matlabPtr->feval(u"set", args_realt);
 		matlabPtr->eval(u"drawnow");
 
+		//----------------------------------------------------------
+		/*
+		vector<sample> sampl2 = btsManager.Read_vector(last, 100, 5);
+		vector<sample>::iterator ptr2;
+		cout << "The vector elements are : ";
+		for (ptr2 = sampl2.begin(); ptr2 < sampl2.end(); ptr2++)
+			yvals2.push_back(ptr2->value), xvals2.push_back(ptr2->index);
+
+
+		std::vector<matlab::data::Array> args_realt2({
+			line2,
+			factory.createCharArray(std::string("YData")),
+			factory.createArray({ yvals2.size(), 1 }, yvals2.begin(), yvals2.end()),
+			factory.createCharArray(std::string("XData")),
+			factory.createArray({ xvals2.size(), 1 }, xvals2.begin(), xvals2.end())
+			});
+		matlabPtr->feval(u"set", args_realt2);
+		matlabPtr->eval(u"drawnow");
+		*/
 		// auto start = high_resolution_clock::now();
 		//btsManager.Read(index,100);
 		// auto stop = high_resolution_clock::now();
