@@ -6,3 +6,10 @@ Example
 */obj/
 */PreBuild.cmd
 */PostBuild.cmd
+EmgJsonExample
+*.tlb
+*.txt
+*.json
+*.mvn
+*.mvr
+*/Debug_x64
