@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{0262f672-1f43-4597-b725-4dd62f41d80b}</ProjectGuid>
+    <RootNamespace>LibraryproveXme</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)$(ProjectName)\$(Configuration)_$(Platform)\Out\</OutDir>
+    <IntDir>$(SolutionDir)$(ProjectName)\$(Configuration)_$(Platform)\Int\</IntDir>
+    <LinkIncremental>
+    </LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)$(ProjectName)\$(Configuration)_$(Platform)\Out\</OutDir>
+    <IntDir>$(SolutionDir)$(ProjectName)\$(Configuration)_$(Platform)\Int\</IntDir>
+    <LinkIncremental>
+    </LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>
+      </SDLCheck>
+      <PreprocessorDefinitions>_UNICODE;UNICODE;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>Default</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Program Files\boost\boost_1_82_0;C:\Program Files\Xsens\MVN SDK 2023.0\SDK Files\x64\include;C:\Users\maste\OneDrive - Politecnico di Milano\Politecnico di Milano courses\Tesis\VisualPrograms\Cpp_emg_applications\xsens_basic_lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\Program Files\boost\boost_1_82_0\stage\lib;C:\Users\maste\OneDrive - Politecnico di Milano\Politecnico di Milano courses\Tesis\VisualPrograms\Cpp_emg_applications\xsens_basic_lib\Debug_x64\Out;C:\Program Files\Xsens\MVN SDK 2023.0\SDK Files\x64\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>xme64.lib;xstypes64.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>echo "hola";
+
+if $(Platform)==x64 (
+set postfix=64
+) else (
+set postfix=32
+)
+
+copy /Y /B "C:\Program Files\Xsens\MVN SDK 2023.0\SDK Files\x64\lib\xstypes%postfix%.dll" "$(OutDir)" &gt;NUL
+copy /Y /B "C:\Program Files\Xsens\MVN SDK 2023.0\SDK Files\x64\lib\xsensdeviceapi%postfix%.dll" "$(OutDir)" &gt;NUL
+copy /Y /B "C:\Program Files\Xsens\MVN SDK 2023.0\SDK Files\x64\lib\xee_solver%postfix%.dll" "$(OutDir)" &gt;NUL
+copy /Y /B "C:\Program Files\Xsens\MVN SDK 2023.0\SDK Files\x64\lib\xme%postfix%.dll" "$(OutDir)" &gt;NUL
+
+copy /Y /B "C:\Program Files\Xsens\MVN SDK 2023.0\SDK Files\rundeps\*.*" "$(OutDir)" &gt;NUL</Command>
+      <Message>Copying XME dll</Message>
+    </PostBuildEvent>
+    <BuildLog>
+      <Path>$(IntDir)\msbuild.log</Path>
+    </BuildLog>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>
+      </SDLCheck>
+      <PreprocessorDefinitions>_UNICODE;UNICODE;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>Default</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Program Files\boost\boost_1_82_0;C:\Program Files\Xsens\MVN SDK 2023.0\SDK Files\x64\include;C:\Users\maste\OneDrive - Politecnico di Milano\Politecnico di Milano courses\Tesis\VisualPrograms\Cpp_emg_applications\xsens_basic_lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\Program Files\boost\boost_1_82_0\stage\lib;C:\Users\maste\OneDrive - Politecnico di Milano\Politecnico di Milano courses\Tesis\VisualPrograms\Cpp_emg_applications\xsens_basic_lib\Debug_x64\Out;C:\Program Files\Xsens\MVN SDK 2023.0\SDK Files\x64\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>xme64.lib;xstypes64.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>echo "hola";
+
+if $(Platform)==x64 (
+set postfix=64
+) else (
+set postfix=32
+)
+
+copy /Y /B "C:\Program Files\Xsens\MVN SDK 2023.0\SDK Files\x64\lib\xstypes%postfix%.dll" "$(OutDir)" &gt;NUL
+copy /Y /B "C:\Program Files\Xsens\MVN SDK 2023.0\SDK Files\x64\lib\xsensdeviceapi%postfix%.dll" "$(OutDir)" &gt;NUL
+copy /Y /B "C:\Program Files\Xsens\MVN SDK 2023.0\SDK Files\x64\lib\xee_solver%postfix%.dll" "$(OutDir)" &gt;NUL
+copy /Y /B "C:\Program Files\Xsens\MVN SDK 2023.0\SDK Files\x64\lib\xme%postfix%.dll" "$(OutDir)" &gt;NUL
+
+copy /Y /B "C:\Program Files\Xsens\MVN SDK 2023.0\SDK Files\rundeps\*.*" "$(OutDir)" &gt;NUL</Command>
+      <Message>Copying XME dll</Message>
+    </PostBuildEvent>
+    <BuildLog>
+      <Path>$(IntDir)\msbuild.log</Path>
+    </BuildLog>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Library_proveXme.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\xsens_basic_lib\xsens_basic_lib.vcxproj">
+      <Project>{bcafba5e-5cfb-4468-a23a-8838a6cd175e}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
