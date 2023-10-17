@@ -20,6 +20,7 @@ namespace xsens_manage_tools {
 	public:
 		XsStringArray segmentNames;
 		XmeJointArray joints;
+		std::string segmentNames_str[16];
 
 		xsensManager(XsString calibT, XsString Conf);
 		~xsensManager();
@@ -27,13 +28,13 @@ namespace xsens_manage_tools {
 		bool scanMode();
 		void ReviewStatus();
 		void ConfigurePatient();
-		XmeControl getXmeControl();
+		XmeControl &getXmeControl();
 
 		bool IsScanning();
 
 		void Calibrate();
 		bool ToogleTimePoseMode();
-		std::vector<PoseRecord> ReadUnreadPoses();
+		std::vector<XmePose> ReadUnreadPoses();
 
 		void CreateMVNFile(XsString const fileName);
 		void OpenMVNFile(XsString const fileName);

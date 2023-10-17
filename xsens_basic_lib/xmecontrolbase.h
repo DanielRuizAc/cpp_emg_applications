@@ -38,8 +38,6 @@
 
 extern volatile std::atomic_bool readSignal;
 
-extern volatile std::atomic_int xsens_wait_msgs;
-
 struct PoseRecord{
 	XmePose pose;
 	XsMatrix joints;
@@ -73,18 +71,11 @@ public:
 		return *m_xmeControl;
 	}
 
-	inline XmePose lastPose() const
+	inline std::vector<XmePose> lastListPose() const
 	{
 		std::lock_guard<std::mutex> lock(m_poseMutex);
-		return m_lastPose;
-	}
-
-	inline std::vector<PoseRecord> lastListPose() const
-	{
 		readSignal = true;
-		std::lock_guard<std::mutex> lock(m_poseMutex);
-		xsens_wait_msgs = 0;
-		return this->unread_poses;
+		return std::vector<XmePose>(this->unread_poses);
 	}
 
 	inline void Erase_unreaded() {
@@ -102,8 +93,7 @@ private:
 	int m_awindaChannel;
 
 	mutable std::mutex m_poseMutex;
-	XmePose m_lastPose;
-	std::vector<PoseRecord> unread_poses;
+	std::vector<XmePose> unread_poses;
 };
 
 #endif

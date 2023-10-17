@@ -26,14 +26,12 @@ namespace xsens_manage_tools {
 			, posPelvis[0], posPelvis[1], posPelvis[2]
 			, posLArm[0], posLArm[1], posLArm[2]
 			, posRArm[0], posRArm[1], posRArm[2] );
-
-		std::printf("sdfafsafasdf");
 	}
 
 
 	xsensManager::xsensManager(XsString calibT, XsString Conf) {
-		// XmeLicense aux_lic;
 		this->lic = std::shared_ptr<XmeLicense>(new XmeLicense());
+
 		printf("Constructor \n");
 		std::cout << "XME Version: " << xmeGetDllVersion().toString() << " License: " << this->lic->getCurrentLicense() << std::endl;
 		this->calibType = calibT;
@@ -47,41 +45,20 @@ namespace xsens_manage_tools {
 			this->instance = std::shared_ptr<XmeControlBaseSC>(new XmeControlBaseSC());
 			this->instance->setAwindaChannel(this->channel);	// We always set this channel, but this is only required if you use Awinda
 
-			XsStringArray confList = this->instance->xme().configurationList();
-			XsStringArray bodyLabelList = this->instance->xme().bodyDimensionLabelList();
 			XsStringArray segList = this->instance->xme().segmentNames();
 			this->segmentNames = segList;
 			this->joints = this->instance->xme().joints();
 
 			XsStringArray::iterator string_ptr;
 
-			for (string_ptr = confList.begin(); string_ptr < confList.end(); string_ptr++) {
-				std::cout << *string_ptr << std::endl;
-			}
-
-			std::cout << std::endl;
-
-			//for (string_ptr = calLabelList.begin(); string_ptr < calLabelList.end(); string_ptr++) {
-			//	std::cout << *string_ptr << std::endl;
-			//}
-
-			std::cout << std::endl;
-
-			for (string_ptr = bodyLabelList.begin(); string_ptr < bodyLabelList.end(); string_ptr++) {
-				std::cout << *string_ptr << std::endl;
-				std::cout << "Description: " << this->instance->xme().bodyDimensionDescription(*string_ptr) << std::endl;
-				std::cout << "Value: " << this->instance->xme().bodyDimensionValue(*string_ptr) << std::endl;
-			}
-
-			std::cout << std::endl;
-
 			for (string_ptr = segList.begin(); string_ptr < segList.end(); string_ptr++) {
 				std::cout << *string_ptr << std::endl;
 				std::cout << "Id: " << this->instance->xme().segmentId(*string_ptr) << std::endl;
 				std::cout << "Index: " << this->instance->xme().segmentIndex(*string_ptr) << std::endl;
+				if (this->instance->xme().segmentIndex(*string_ptr) <= 15) {
+					this->segmentNames_str[this->instance->xme().segmentIndex(*string_ptr)] = std::string(string_ptr->c_str());
+				}
 			}
-
-
 
 		}
 		catch (XsException const& e)
@@ -132,12 +109,13 @@ namespace xsens_manage_tools {
 	}
 
 
-	XmeControl xsensManager::getXmeControl() {
+	XmeControl &xsensManager::getXmeControl() {
 		return this->instance->xme();
 	}
 
 
 	void xsensManager::ConfigurePatient() {
+		
 		this->instance->xme().setBodyDimension("bodyHeight", 1.725);
 		this->instance->xme().setBodyDimension("shoulderHeight", 1.473);
 		this->instance->xme().setBodyDimension("shoulderWidth", 0.313);
@@ -145,7 +123,10 @@ namespace xsens_manage_tools {
 		this->instance->xme().setBodyDimension("wristSpan", 1.335);
 		this->instance->xme().setBodyDimension("armSpan", 1.610);
 		this->instance->xme().setBodyDimension("wristSpan", 1.335);
-		this->instance->xme().setBodyDimension("hipHeight", 1.335);
+		this->instance->xme().setBodyDimension("hipHeight", 1.000);
+		this->instance->xme().setBodyDimension("shoeSoleHeight", 0.248);
+
+		this->instance->xme().setUserScenario("noLevel");
 
 		XsStringArray bodyLabelList = this->instance->xme().bodyDimensionLabelList();
 		XsStringArray::iterator string_ptr;
@@ -221,7 +202,7 @@ namespace xsens_manage_tools {
 
 
 	bool xsensManager::IsScanning() {
-		return this->instance->xme().status().isScanning();
+		return this->instance->xme().status().isScanning() || this->instance->xme().status().isCalibrating() || this->instance->xme().status().isProcessing();
 	}
 
 
@@ -268,12 +249,12 @@ namespace xsens_manage_tools {
 	}
 
 
-	std::vector<PoseRecord> xsensManager::ReadUnreadPoses() {
+	std::vector<XmePose> xsensManager::ReadUnreadPoses() {
 		if (!readSignal) {
 			return this->instance->lastListPose();
 		}
 		else {
-			return std::vector<PoseRecord>();
+			return std::vector<XmePose>();
 		}
 	}
 

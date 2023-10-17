@@ -63,7 +63,7 @@ XmeControlBaseSC::XmeControlBaseSC()
 		throw e;
 	}
 	m_xmeControl->addCallbackHandler(this);
-	unread_poses = std::vector<PoseRecord>();
+	unread_poses = std::vector<XmePose>();
 }
 
 XmeControlBaseSC::~XmeControlBaseSC()
@@ -222,11 +222,9 @@ void XmeControlBaseSC::onPoseReady(XmeControl* xme)
 	if (readSignal) this->unread_poses.clear();
 	readSignal = false;
 	XmePose lastPose = m_xmeControl->pose(XME_LAST_AVAILABLE_FRAME);
-	XsMatrix jointAngles = m_xmeControl->jointAngles(lastPose);
 
 	if (!lastPose.empty())
-		m_lastPose = lastPose, this->unread_poses.push_back(PoseRecord{lastPose, jointAngles, XsTimeStamp::now()});
-	xsens_wait_msgs = this->unread_poses.size();
+		this->unread_poses.push_back(lastPose);
 }
 
 void XmeControlBaseSC::onProcessingComplete(XmeControl*)
