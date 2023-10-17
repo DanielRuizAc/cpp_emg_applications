@@ -26,14 +26,11 @@ namespace xsens_manage_tools {
 			, posPelvis[0], posPelvis[1], posPelvis[2]
 			, posLArm[0], posLArm[1], posLArm[2]
 			, posRArm[0], posRArm[1], posRArm[2]);
-
-		std::printf("sdfafsafasdf");
 	}
 
 
 	xsensManager::xsensManager(XsString calibT, XsString Conf) {
 		this->lic = std::shared_ptr<XmeLicense>(new XmeLicense());
-		char* pts[16];
 
 		printf("Constructor \n");
 		std::cout << "XME Version: " << xmeGetDllVersion().toString() << " License: " << this->lic->getCurrentLicense() << std::endl;
@@ -250,9 +247,7 @@ namespace xsens_manage_tools {
 
 	std::vector<XmePose> xsensManager::ReadUnreadPoses() {
 		if (!readSignal) {
-			printf("reading \n");
 			return this->instance->lastListPose();
-			printf("done \n");
 		}
 		else {
 			return std::vector<XmePose>();
