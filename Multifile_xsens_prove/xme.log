@@ -1,0 +1,151 @@
+1697555141.326 <426C> [WRITE] Journaller::writeFileHeader Journaller logging to C:/Users/MADEUC5_4/Documents/Cpp_emg_applications/Cpp_emg_applications/Multifile_xsens_prove/xme.log for XME 2023.0.0 / 120521 build 10035 on 2023/10/17 15:05:41.326
+1697555141.326 <426C> [WRITE] Journaller::setLogLevel Log level set to [ALERT] 
+1697555141.328 <426C> [WRITE] Journaller::setDebugLevel Debugger output log level set to [FATAL] 
+1697555141.328 <426C> [WRITE] xdaSetLogger XDA now logging to C:/Users/MADEUC5_4/Documents/Cpp_emg_applications/Cpp_emg_applications/Multifile_xsens_prove/xme.log
+1697555141.364 <426C> [WRITE] scanCalibrationFiles Scanning for calibration files in path C:/Users/MADEUC5_4/Documents/Cpp_emg_applications/Cpp_emg_applications/Multifile_xsens_prove/Debug_x64/Out/
+1697555141.367 <426C> [WRITE] scanCalibrationFiles C:/Users/MADEUC5_4/Documents/Cpp_emg_applications/Cpp_emg_applications/Multifile_xsens_prove/Debug_x64/Out/npose.xsa imported as calibration Npose
+1697555141.367 <426C> [WRITE] scanCalibrationFiles C:/Users/MADEUC5_4/Documents/Cpp_emg_applications/Cpp_emg_applications/Multifile_xsens_prove/Debug_x64/Out/tpose.xsa imported as calibration Tpose
+1697555142.727 <426C> [WRITE] XmeLicense_construct BuildTime = 2022/12/2
+LicenseInfo =
+<hasp_info>
+	<hasp id="1695557130" type="HASP-HL" key_model="Time" configuration="sentinelhl" production_date="2020/6/15" attached="false">
+		<vendor id="104171" name="" />
+		<product id="311" name="MVN-AL-PRO-L-D">
+			<feature id="520" name="MVN Redistributable Subscription" locked="true" expired="false" disabled="false" usable="true" license_type="perpetual" />
+			<feature id="521" name="MVN Redistributable Maintenance" locked="true" expired="true" disabled="false" usable="false" license_type="expiration" exp_date="2023/9/7" />
+			<feature id="580" name="MVN Analyze Pro Subscription" locked="true" expired="false" disabled="false" usable="true" license_type="perpetual" />
+			<feature id="581" name="MVN Analyze Pro Maintenance" locked="true" expired="true" disabled="false" usable="false" license_type="expiration" exp_date="2023/9/7" />
+		</product>
+	</hasp>
+	<hasp id="313979651923526335" type="HASP-SL" key_model="Certificate" configuration="haspsl-usermode" production_date="2021/5/20" attached="false">
+		<vendor id="104171" name="" />
+		<product id="10" name="Xsens">
+			<feature id="1" name="Xsens" locked="true" expired="false" disabled="false" usable="true" license_type="perpetual" />
+		</product>
+		<product id="300" name="MVN-AL-PRO">
+			<feature id="520" name="XME Redist Subscription" locked="true" expired="true" disabled="false" usable="false" license_type="expiration" exp_date="2021/6/4" />
+			<feature id="521" name="XME Redist Maintenance" locked="true" expired="true" disabled="false" usable="false" license_type="expiration" exp_date="2021/6/4" />
+			<feature id="580" name="MVN Analyze Pro Subscription" locked="true" expired="true" disabled="false" usable="false" license_type="expiration" exp_date="2021/6/4" />
+			<feature id="581" name="MVN Analyze Pro Maintenance" locked="true" expired="true" disabled="false" usable="false" license_type="expiration" exp_date="2021/6/4" />
+		</product>
+	</hasp>
+</hasp_info>
+1697555143.421 <5990> [ALERT] DeviceCommunicator::doTransaction Timeout waiting for reply to XMID_GotoConfig(30), timeout = 100 ms.
+1697555143.421 <5990> [ALERT] DeviceCommunicator::gotoConfig Failed to go to config, XRV: XRV_TIMEOUTNODATA(259)
+1697555143.654 <28DC> [ALERT] Communicator::handleMessage Error message received: FAFF420104BA
+1697555143.654 <28DC> [ALERT] xsens::ReplyMonitor::dumpObjectList Waiting for 1 objects
+1697555143.654 <28DC> [ALERT] xsens::ReplyMonitor::dumpObjectList 0: msg ID = 0x1F
+1697555143.654 <5990> [ALERT] DeviceCommunicator::doTransaction Received error XRV_INVALIDMSG(4)
+1697555144.025 <4CC4> [ALERT] Communicator::handleMessage Error message received: FAFF420104BA
+1697555144.025 <4CC4> [ALERT] xsens::ReplyMonitor::dumpObjectList Waiting for 1 objects
+1697555144.025 <4CC4> [ALERT] xsens::ReplyMonitor::dumpObjectList 0: msg ID = 0x1F
+1697555144.025 <5990> [ALERT] DeviceCommunicator::doTransaction Received error XRV_INVALIDMSG(4)
+1697555144.149 <5990> [WRITE] XsDevice::extractFirmwareVersion Device 01200275 has firmware version 4.4.0
+1697555144.181 <4CC4> [ALERT] Communicator::handleMessage Error message received: FAFF420104BA
+1697555144.182 <4CC4> [ALERT] xsens::ReplyMonitor::dumpObjectList Waiting for 1 objects
+1697555144.182 <4CC4> [ALERT] xsens::ReplyMonitor::dumpObjectList 0: msg ID = 0x4B
+1697555144.182 <5990> [ALERT] DeviceCommunicator::doTransaction Received error XRV_INVALIDMSG(4)
+1697555144.244 <5990> [WRITE] XsDevice::extractFirmwareVersion Device 01200275 has firmware version 4.4.0
+1697555144.276 <5990> [WRITE] DeviceFactory::createMasterDevice Created master device with id: 01200275 and firmware version: 4.4.0
+1697555144.385 <4CC4> [ALERT] Communicator::handleMessage Error message received: FAFF420104BA
+1697555144.385 <4CC4> [ALERT] xsens::ReplyMonitor::dumpObjectList Waiting for 1 objects
+1697555144.385 <4CC4> [ALERT] xsens::ReplyMonitor::dumpObjectList 0: msg ID = 0x4B
+1697555144.385 <5C64> [ALERT] DeviceCommunicator::doTransaction Received error XRV_INVALIDMSG(4)
+1697555146.448 <4CC4> [WRITE] MtwBaseDevice::handleClientConnect Master 01200275 Client connected: 00B46AB9
+1697555146.448 <4CC4> [WRITE] XsDevice::setFirmwareVersion Device 00B46AB9 has firmware version 4.4.0
+1697555147.050 <4CC4> [WRITE] MtwBaseDevice::handleClientConnect Master 01200275 Client connected: 00B46AB5
+1697555147.051 <4CC4> [WRITE] XsDevice::setFirmwareVersion Device 00B46AB5 has firmware version 4.4.0
+1697555147.175 <4CC4> [WRITE] MtwBaseDevice::handleClientConnect Master 01200275 Client connected: 00B46AB8
+1697555147.175 <4CC4> [WRITE] XsDevice::setFirmwareVersion Device 00B46AB8 has firmware version 4.4.0
+1697555147.251 <4CC4> [WRITE] MtwBaseDevice::handleClientConnect Master 01200275 Client connected: 00B46AB1
+1697555147.252 <4CC4> [WRITE] XsDevice::setFirmwareVersion Device 00B46AB1 has firmware version 4.4.0
+1697555147.405 <4CC4> [WRITE] MtwBaseDevice::handleClientConnect Master 01200275 Client connected: 00B46AB0
+1697555147.406 <4CC4> [WRITE] XsDevice::setFirmwareVersion Device 00B46AB0 has firmware version 4.4.0
+1697555147.406 <4CC4> [WRITE] MtwBaseDevice::handleClientConnect Master 01200275 Client connected: 00B46AB4
+1697555147.407 <4CC4> [WRITE] XsDevice::setFirmwareVersion Device 00B46AB4 has firmware version 4.4.0
+1697555147.651 <4CC4> [WRITE] MtwBaseDevice::handleClientConnect Master 01200275 Client connected: 00B46AB7
+1697555147.651 <4CC4> [WRITE] XsDevice::setFirmwareVersion Device 00B46AB7 has firmware version 4.4.0
+1697555147.745 <4CC4> [WRITE] MtwBaseDevice::handleClientConnect Master 01200275 Client connected: 00B46ABA
+1697555147.746 <4CC4> [WRITE] XsDevice::setFirmwareVersion Device 00B46ABA has firmware version 4.4.0
+1697555147.898 <4CC4> [WRITE] MtwBaseDevice::handleClientConnect Master 01200275 Client connected: 00B46AAE
+1697555147.899 <4CC4> [WRITE] XsDevice::setFirmwareVersion Device 00B46AAE has firmware version 4.4.0
+1697555147.960 <4CC4> [ALERT] Communicator::handleMessage Error message received: FAFF420104BA
+1697555147.960 <4CC4> [ALERT] xsens::ReplyMonitor::dumpObjectList Waiting for 1 objects
+1697555147.960 <4CC4> [ALERT] xsens::ReplyMonitor::dumpObjectList 0: msg ID = 0x2B
+1697555148.468 <5C64> [WRITE] XsDevice::extractFirmwareVersion Device 01200275 has firmware version 4.4.0
+1697555151.049 <4CC4> [ERROR] MtContainer::checkQueue Missing item(s) in Live queue
+1697555151.049 <4CC4> [ERROR] MtContainer::checkQueue Missing item(s) in Buffered queue
+1697555151.752 <4CC4> [ERROR] MtContainer::checkQueue Missing item(s) in Live queue
+1697555151.752 <4CC4> [ERROR] MtContainer::checkQueue Missing item(s) in Live queue
+1697555151.752 <4CC4> [ERROR] MtContainer::checkQueue Missing item(s) in Live queue
+1697555151.752 <4CC4> [ERROR] MtContainer::checkQueue Missing item(s) in Live queue
+1697555151.752 <4CC4> [ERROR] MtContainer::checkQueue Missing item(s) in Live queue
+1697555151.752 <4CC4> [ERROR] MtContainer::checkQueue Missing item(s) in Live queue
+1697555151.752 <4CC4> [ERROR] MtContainer::checkQueue Missing item(s) in Live queue
+1697555151.752 <4CC4> [ERROR] MtContainer::checkQueue Missing item(s) in Live queue
+1697555151.752 <4CC4> [ERROR] MtContainer::checkQueue Missing item(s) in Live queue
+1697555151.753 <4CC4> [ERROR] MtContainer::checkQueue Missing item(s) in Live queue
+1697555151.753 <4CC4> [ERROR] MtContainer::checkQueue Missing item(s) in Live queue
+1697555151.753 <4CC4> [ERROR] MtContainer::checkQueue Missing item(s) in Live queue
+1697555151.753 <4CC4> [ERROR] MtContainer::checkQueue Missing item(s) in Live queue
+1697555151.753 <4CC4> [ERROR] MtContainer::checkQueue Missing item(s) in Live queue
+1697555151.753 <4CC4> [ERROR] MtContainer::checkQueue Missing item(s) in Live queue
+1697555151.755 <4CC4> [ERROR] MtContainer::checkQueue Missing item(s) in Live queue
+1697555151.755 <4CC4> [ERROR] MtContainer::checkQueue Missing item(s) in Live queue
+1697555151.755 <4CC4> [ERROR] MtContainer::checkQueue Missing item(s) in Live queue
+1697555151.755 <4CC4> [ERROR] MtContainer::checkQueue Missing item(s) in Live queue
+1697555151.755 <4CC4> [ERROR] MtContainer::checkQueue Missing item(s) in Live queue
+1697555151.755 <4CC4> [ERROR] MtContainer::checkQueue Missing item(s) in Buffered queue
+1697555151.755 <4CC4> [ERROR] MtContainer::checkQueue Missing item(s) in Buffered queue
+1697555151.755 <4CC4> [ERROR] MtContainer::checkQueue Missing item(s) in Buffered queue
+1697555151.755 <4CC4> [ERROR] MtContainer::checkQueue Missing item(s) in Buffered queue
+1697555151.755 <4CC4> [ERROR] MtContainer::checkQueue Missing item(s) in Buffered queue
+1697555151.755 <4CC4> [ERROR] MtContainer::checkQueue Missing item(s) in Buffered queue
+1697555151.755 <4CC4> [ERROR] MtContainer::checkQueue Missing item(s) in Buffered queue
+1697555151.755 <4CC4> [ERROR] MtContainer::checkQueue Missing item(s) in Buffered queue
+1697555151.755 <4CC4> [ERROR] MtContainer::checkQueue Missing item(s) in Buffered queue
+1697555151.755 <4CC4> [ERROR] MtContainer::checkQueue Missing item(s) in Buffered queue
+1697555151.755 <4CC4> [ERROR] MtContainer::checkQueue Missing item(s) in Buffered queue
+1697555151.755 <4CC4> [ERROR] MtContainer::checkQueue Missing item(s) in Buffered queue
+1697555151.755 <4CC4> [ERROR] MtContainer::checkQueue Missing item(s) in Buffered queue
+1697555151.755 <4CC4> [ERROR] MtContainer::checkQueue Missing item(s) in Buffered queue
+1697555151.755 <4CC4> [ERROR] MtContainer::checkQueue Missing item(s) in Buffered queue
+1697555151.755 <4CC4> [ERROR] MtContainer::checkQueue Missing item(s) in Buffered queue
+1697555151.755 <4CC4> [ERROR] MtContainer::checkQueue Missing item(s) in Buffered queue
+1697555151.755 <4CC4> [ERROR] MtContainer::checkQueue Missing item(s) in Buffered queue
+1697555151.755 <4CC4> [ERROR] MtContainer::checkQueue Missing item(s) in Buffered queue
+1697555151.755 <4CC4> [ERROR] MtContainer::checkQueue Missing item(s) in Buffered queue
+1697555152.839 <4CC4> [ALERT] ProtocolHandler::findMessage Invalid message length: 65489
+1697555166.877 <426C> [WRITE] XmeControl::initializeCalibration label: Npose file: 
+1697555166.881 <426C> [WRITE] XmeControl::startCalibration Starting calibration Npose at 1970/01/01 00:00:00.000
+1697555166.882 <426C> [WRITE] XmeControl::startRecording when: 0 in local: 0
+1697555178.069 <4CC4> [ALERT] ProtocolHandler::findMessage Invalid message length: 44035
+1697555182.841 <5C64> [WRITE] XmeControl::stopRecording when: 0
+1697555182.858 <5C64> [WRITE] XmeControl::stopRecording when: 0
+1697555204.418 <4CC4> [ALERT] ProtocolHandler::findMessage Invalid message length: 60253
+1697555204.758 <4CC4> [ALERT] ProtocolHandler::findMessage Invalid message length: 59470
+1697555216.279 <426C> [WRITE] XmeControl::startRecording when: 0 in local: 0
+1697555237.856 <4CC4> [ALERT] ProtocolHandler::findMessage Invalid message length: 64477
+1697555256.304 <426C> [WRITE] XmeControl::stopRecording when: 0
+1697555256.319 <426C> [WRITE] XmeControl::closeFile C:\Users\MADEUC5_4\Documents\Cpp_emg_applications\Cpp_emg_applications\Multifile_xsens_prove\20231017 150656.271.mvn
+1697555271.733 <426C> [WRITE] XmeControl::startRecording when: 0 in local: 0
+1697555311.743 <426C> [WRITE] XmeControl::stopRecording when: 0
+1697555311.763 <426C> [WRITE] XmeControl::closeFile C:\Users\MADEUC5_4\Documents\Cpp_emg_applications\Cpp_emg_applications\Multifile_xsens_prove\20231017 150751.725.mvn
+1697555327.228 <426C> [WRITE] XmeControl::startRecording when: 0 in local: 0
+1697555367.242 <426C> [WRITE] XmeControl::stopRecording when: 0
+1697555367.254 <426C> [WRITE] XmeControl::closeFile C:\Users\MADEUC5_4\Documents\Cpp_emg_applications\Cpp_emg_applications\Multifile_xsens_prove\20231017 150847.218.mvn
+1697555383.994 <4144> [ERROR] xeecore::Problem::solve Aborted solve.
+1697555384.452 <4CC4> [WRITE] MtwBaseDevice::handleClientDisconnect Master 01200275 Client disconnected: 00B46AB9
+1697555384.453 <4CC4> [WRITE] MtwBaseDevice::handleClientDisconnect Master 01200275 Client disconnected: 00B46AB5
+1697555384.453 <4CC4> [WRITE] MtwBaseDevice::handleClientDisconnect Master 01200275 Client disconnected: 00B46AB8
+1697555384.453 <4CC4> [WRITE] MtwBaseDevice::handleClientDisconnect Master 01200275 Client disconnected: 00B46AB1
+1697555384.453 <4CC4> [WRITE] MtwBaseDevice::handleClientDisconnect Master 01200275 Client disconnected: 00B46AB0
+1697555384.454 <4CC4> [WRITE] MtwBaseDevice::handleClientDisconnect Master 01200275 Client disconnected: 00B46AB4
+1697555384.454 <4CC4> [WRITE] MtwBaseDevice::handleClientDisconnect Master 01200275 Client disconnected: 00B46AB7
+1697555384.454 <4CC4> [WRITE] MtwBaseDevice::handleClientDisconnect Master 01200275 Client disconnected: 00B46ABA
+1697555384.454 <4CC4> [WRITE] MtwBaseDevice::handleClientDisconnect Master 01200275 Client disconnected: 00B46AAE
+1697555384.499 <426C> [WRITE] XsDevice::extractFirmwareVersion Device 01200275 has firmware version 4.4.0
+1697555384.637 <426C> [ALERT] DeviceCommunicator::doTransaction Failed to write message because XRV_NOPORTOPEN(288) 
+1697555384.637 <426C> [ALERT] AwindaBaseStation::sendDriverDisconnect Disconnect failed
+1697555384.637 <426C> [ALERT] DeviceCommunicator::doTransaction Failed to write message because XRV_NOPORTOPEN(288) 
+1697555384.637 <426C> [ALERT] AwindaBaseStation::sendDriverDisconnect Disconnect failed
