@@ -7,8 +7,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Cpp_basic_read", "Cpp_basic
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Cpp_manager", "Cpp_manager\Cpp_manager.vcxproj", "{375F83AA-5B1F-4189-9E62-957636A58D0F}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Example", "Example\Example.vcxproj", "{39AA6C63-1C4A-42EF-8DF4-EDD924C43E1A}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "bts_freeemg_manage", "bts_freeemg_manage\bts_freeemg_manage.vcxproj", "{E881DD8E-FADC-404C-A51C-B1C5ECDFD16E}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Library_prove", "Library_prove\Library_prove.vcxproj", "{5718ED3D-0505-4FF4-A7DE-2BD3254B9C3C}"
@@ -45,14 +43,6 @@ Global
 		{375F83AA-5B1F-4189-9E62-957636A58D0F}.Release|x64.Build.0 = Release|x64
 		{375F83AA-5B1F-4189-9E62-957636A58D0F}.Release|x86.ActiveCfg = Release|Win32
 		{375F83AA-5B1F-4189-9E62-957636A58D0F}.Release|x86.Build.0 = Release|Win32
-		{39AA6C63-1C4A-42EF-8DF4-EDD924C43E1A}.Debug|x64.ActiveCfg = Debug|x64
-		{39AA6C63-1C4A-42EF-8DF4-EDD924C43E1A}.Debug|x64.Build.0 = Debug|x64
-		{39AA6C63-1C4A-42EF-8DF4-EDD924C43E1A}.Debug|x86.ActiveCfg = Debug|Win32
-		{39AA6C63-1C4A-42EF-8DF4-EDD924C43E1A}.Debug|x86.Build.0 = Debug|Win32
-		{39AA6C63-1C4A-42EF-8DF4-EDD924C43E1A}.Release|x64.ActiveCfg = Release|x64
-		{39AA6C63-1C4A-42EF-8DF4-EDD924C43E1A}.Release|x64.Build.0 = Release|x64
-		{39AA6C63-1C4A-42EF-8DF4-EDD924C43E1A}.Release|x86.ActiveCfg = Release|Win32
-		{39AA6C63-1C4A-42EF-8DF4-EDD924C43E1A}.Release|x86.Build.0 = Release|Win32
 		{E881DD8E-FADC-404C-A51C-B1C5ECDFD16E}.Debug|x64.ActiveCfg = Debug|x64
 		{E881DD8E-FADC-404C-A51C-B1C5ECDFD16E}.Debug|x64.Build.0 = Debug|x64
 		{E881DD8E-FADC-404C-A51C-B1C5ECDFD16E}.Debug|x86.ActiveCfg = Debug|Win32

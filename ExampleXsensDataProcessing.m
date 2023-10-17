@@ -24,9 +24,9 @@ hold on
 plot(0.01:0.01:length(forearm_z_positions)*0.01,forearm_z_positions);
 legend
 
-
-% fileName = './jsonemg/Batch.txt'; % filename in txt extension
-fileName = './bts_xsens_implementation/Batch.txt';
+%% 
+fileName = './jsonemg/2023-10.txt'; % filename in txt extension
+% fileName = './bts_xsens_implementation/Batch.txt';
 str_emg = fileread(fileName); % dedicated for reading files as text
 json_msgs_emg = splitlines(str_emg); % Splitting the complete text in lines
 
@@ -47,20 +47,63 @@ for i=1:(length(json_msgs_emg)-1)
             channels_index(j,index_bts+k) = ch_data(k).index;
         end
         if (j==length(data_pkt))
-            disp(1)
             index_bts = index_bts + length(ch_data);
         end
     end
 end
 
-WinLen = 10;                                            % Window Length For RMS Calculation
-rmsv = sqrt(movmean(channels.^2, 100));    
+figure
+for i=1:size(channels,1)
+    subplot(size(channels,1),1,i)
+    plot(channels_index(i,:)*0.001 ,channels(i,:))
+end
+
+fr = 1000;
+
+f = fr*(0:length(channels_index(1,:))/2 )/length(channels_index(1,:));
+
+for i=1:size(channels,1)
+    four = fft(channels(i,:));
+    four = abs(four/length(four));
+    four = four(1, 1:(length(four)/2+1));
+    four(1,2:end-1) = 2*four(1,2:end-1);
+    chan_four(i,:) = four;
+end
 
 figure
-plot(channels_index(1,:)*0.001 ,channels(1,:))
+for i=1:size(channels,1)
+    subplot(size(channels,1),1,i)
+    plot(f ,chan_four(i,:))
+end
+
+nq_freq = fr/2;
+cutoff_low = 10;
+cutoff_high = 200;
+
+[b,a] = butter(4,[cutoff_low,cutoff_high]/fr,"bandpass");
+
+for i=1:size(channels,1)
+    filtered_data(i,:) = filtfilt(b,a,channels(i,:));
+end
 
 figure
-plot((1:length(rmsv))*0.001,rmsv)
+for i=1:size(channels,1)
+    subplot(size(channels,1),1,i)
+    plot(channels_index(i,:)*0.001 ,filtered_data(i,:))
+end
+
+WinLen = 100;                                            % Window Length For RMS Calculation
+for i=1:size(channels,1)
+    rmsv(i,:) = sqrt(movmean(abs(filtered_data(i,:)).^2, WinLen));
+end
+
+% rmsv = sqrt(movmean(abs(channels).^2, WinLen));    
+
+figure
+for i=1:size(channels,1)
+    subplot(size(channels,1),1,i)
+    plot(channels_index(i,:)*0.001 ,rmsv(i,:))
+end
 %% 
 figure
 plot(channels_index(2,:)*0.001 ,channels(2,:))

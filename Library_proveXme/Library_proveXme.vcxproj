@@ -119,12 +119,12 @@
       </SDLCheck>
       <PreprocessorDefinitions>_UNICODE;UNICODE;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>Default</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Program Files\boost\boost_1_82_0;C:\Program Files\Xsens\MVN SDK 2023.0\SDK Files\x64\include;C:\Users\maste\OneDrive - Politecnico di Milano\Politecnico di Milano courses\Tesis\VisualPrograms\Cpp_emg_applications\xsens_basic_lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\local\boost_1_82_0;C:\Program Files\Xsens\MVN SDK 2023.0\SDK Files\x64\include;C:\Users\MADEUC5_4\Documents\Cpp_emg_applications\Cpp_emg_applications\xsens_basic_lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Program Files\boost\boost_1_82_0\stage\lib;C:\Users\maste\OneDrive - Politecnico di Milano\Politecnico di Milano courses\Tesis\VisualPrograms\Cpp_emg_applications\xsens_basic_lib\Debug_x64\Out;C:\Program Files\Xsens\MVN SDK 2023.0\SDK Files\x64\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\local\boost_1_82_0\stage\lib;C:\Users\MADEUC5_4\Documents\Cpp_emg_applications\Cpp_emg_applications\xsens_basic_lib\Debug_x64\Out;C:\Program Files\Xsens\MVN SDK 2023.0\SDK Files\x64\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>xme64.lib;xstypes64.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>

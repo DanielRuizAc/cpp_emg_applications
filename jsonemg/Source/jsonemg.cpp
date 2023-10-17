@@ -49,13 +49,26 @@ int _tmain(int argc, _TCHAR* argv[])
 	auto begin = high_resolution_clock::now();
 	int last = 0;
 
+	auto start_ts = system_clock::now();
+	auto start_ts_t = system_clock::to_time_t(start_ts);
+	tm local_tm = *localtime(&start_ts_t);
+
+	std::cout << local_tm.tm_year + 1900 << '-';
+	std::cout << local_tm.tm_mon + 1 << '-';
+	std::cout << local_tm.tm_mday << ' ' << std::endl;
+
+	std::string s_tr_time = std::to_string(local_tm.tm_year + 1900) + '-' + std::to_string(local_tm.tm_mon + 1);
+	s_tr_time =+ "-" + local_tm.tm_mday;
+
+
 	bts_manage_tools::batch queue_batch;
 	vector<bts_manage_tools::sample> allSamples(0);
 	boost::asio::io_context io;
 	// const boost::chrono::steady_clock::time_point initial = boost::chrono::high_resolution_clock::now();
 
 	std::ofstream outfile;
-	outfile.open("Batch.txt");
+	// outfile.open("Batch.txt");
+	outfile.open(s_tr_time+".txt");
 
 	boost::asio::steady_timer t(io);
 	t.expires_after(boost::asio::chrono::milliseconds(100));

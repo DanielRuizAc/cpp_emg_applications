@@ -59,7 +59,7 @@ namespace xsens_manage_tools {
 				std::cout << "Id: " << this->instance->xme().segmentId(*string_ptr) << std::endl;
 				std::cout << "Index: " << this->instance->xme().segmentIndex(*string_ptr) << std::endl;
 				if (this->instance->xme().segmentIndex(*string_ptr)<=15) {
-					this->segmentNames_ch[this->instance->xme().segmentIndex(*string_ptr)] = string_ptr->c_str();
+					this->segmentNames_str[this->instance->xme().segmentIndex(*string_ptr)] = std::string(string_ptr->c_str());
 				}
 			}
 

@@ -56,7 +56,7 @@ boost::json::object CreateJsonBatch(bts_manage_tools::batch information,
 }
 
 
-boost::json::object Obtainframe(XmePose const& p, char* segNames[15], XmeJointArray& j, XmeControl& xme_c) {
+boost::json::object Obtainframe(XmePose const& p, std::string segNames[], XmeJointArray& j, XmeControl& xme_c) {
 	
 	if (p.empty())
 	{
@@ -95,8 +95,8 @@ boost::json::object Obtainframe(XmePose const& p, char* segNames[15], XmeJointAr
 		
 		if (jnt.parentConnection().segmentIndex() >= 16 || jnt.childConnection().segmentIndex() >= 16) continue;
 		
-		char* parent_name = segNames[jnt.parentConnection().segmentIndex()];
-		char* child_name = segNames[jnt.childConnection().segmentIndex()];
+		std::string parent_name = segNames[jnt.parentConnection().segmentIndex()];
+		std::string child_name = segNames[jnt.childConnection().segmentIndex()];
 
 		joint_data["parent"] = parent_name;
 		joint_data["child"] = child_name;
@@ -104,7 +104,7 @@ boost::json::object Obtainframe(XmePose const& p, char* segNames[15], XmeJointAr
 		joint_data["y"] = jointVals[i][1];
 		joint_data["z"] = jointVals[i][2];
 
-		obj_joint[std::string(parent_name) + " - " + std::string(child_name)] = joint_data;
+		obj_joint[parent_name + " - " + child_name] = joint_data;
 	}
 	boost::json::object complete_obj;
 
@@ -148,10 +148,9 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	bool userQuit = false;
 	resetKbhit();
-	/*
+	
 	while (!userQuit)
 	{
-		xsensManager.Calibrate();
 		std::cout << "Are you ok with the calibration performed?" << std::endl;
 		switch (_getch()) {
 		case 'y':
@@ -160,10 +159,11 @@ int _tmain(int argc, _TCHAR* argv[])
 			break;
 		default:
 			std::cout << "Making Again" << std::endl;
+			xsensManager.Calibrate();
 			break;
 		}
 	}
-	*/
+	
 
 	bts_manage_tools::bts_bm_manager btsManager;
 	resetKbhit();
@@ -187,9 +187,16 @@ int _tmain(int argc, _TCHAR* argv[])
 	btsManager.PrintSensorData();
 	waitForKeyPress();
 
+	boost::chrono::system_clock::time_point start_ts = boost::chrono::system_clock::now();
+	time_t start_ts_t = boost::chrono::system_clock::to_time_t(start_ts);
+	
+	tm local_tm = *localtime(&start_ts_t);
 
-	xsensManager.ToogleTimePoseMode();
-	// xsensManager.StartRecording();
+	std::string s_tr_time = std::to_string(local_tm.tm_year + 1900) + '-' + std::to_string(local_tm.tm_mon + 1);
+	s_tr_time = s_tr_time + "-" + std::to_string(local_tm.tm_mday);
+	s_tr_time = s_tr_time + "-" + std::to_string(local_tm.tm_hour) + std::to_string(local_tm.tm_min) + std::to_string(local_tm.tm_sec);
+
+
 	printf("Arming and starting BioDAQ device...\n");
 	if (!btsManager.ArmStart()) {
 		printf("Starting aquisition");
@@ -197,36 +204,43 @@ int _tmain(int argc, _TCHAR* argv[])
 		waitForKeyPress();
 		return 0;
 	}
+
+	xsensManager.StartRecording();
+	xsensManager.ToogleTimePoseMode();
+
 	Sleep(100);
 
 	boost::asio::io_context io;
 	const boost::chrono::steady_clock::time_point initial = boost::chrono::high_resolution_clock::now();
 
 	std::ofstream outfile;
-	outfile.open("Batch.txt");
+	// outfile.open("Batch.txt");
+	outfile.open(s_tr_time+".txt");
 	boost::asio::steady_timer t(io);
-	t.expires_after(boost::asio::chrono::milliseconds(200));
+	t.expires_after(boost::asio::chrono::milliseconds(100));
 
-	for (int i = 0; i < 100; i++) {
+	for (int i = 0; i < 300; i++) {
 		auto batch_ts = boost::chrono::high_resolution_clock::now();
 		boost::json::object bts_batch;
 		boost::thread th(&thread_dequeue, &bts_batch, btsManager, initial);
 		std::vector<XmePose> records = xsensManager.ReadUnreadPoses();
 		boost::json::object xsens_batch;
-		// xsens_batch["TimeStamp"] = boost::chrono::to_string();//XsTimeStamp::now().toString().c_str();
+		// xsens_batch["TimeStamp"] = XsTimeStamp::now().toString().c_str();// boost::chrono::to_string();//XsTimeStamp::now().toString().c_str();
 		boost::json::array data_array;
 		for (unsigned short i = 0; i < records.size(); i++) {
-			boost::json::object json_frame = Obtainframe(records[i], xsensManager.segmentNames_ch, xsensManager.joints, xsensManager.getXmeControl());
+			boost::json::object json_frame = Obtainframe(records[i], xsensManager.segmentNames_str, xsensManager.joints, xsensManager.getXmeControl());
 			data_array.push_back(json_frame);
 		}
 		xsens_batch["data"] = data_array;
+		if (xsensManager.getXmeControl().status().isProcessing()) printf("Is processing \n");
+
 
 		th.join();
-		boost::json::object json_batch = { {"xsens", xsens_batch}, { "bts", bts_batch}};
+		boost::json::object json_batch = { {"xsens", xsens_batch}, { "bts", bts_batch}, {"TimeStamp", XsTimeStamp::now().toString().c_str()}};
 
 		outfile << boost::json::serialize(json_batch) << std::endl;
 		t.wait();
-		t.expires_at(t.expires_at() + boost::asio::chrono::milliseconds(200));
+		t.expires_at(t.expires_at() + boost::asio::chrono::milliseconds(100));
 	}
 
 	if (!btsManager.Stop()) {
@@ -234,14 +248,14 @@ int _tmain(int argc, _TCHAR* argv[])
 	}
 
 	xsensManager.ToogleTimePoseMode();
-	// xsensManager.StopRecording();
+	xsensManager.StopRecording();
 	// xsensManager.CloseMVNFile();
 	outfile.close();
 
 
 	btsManager.Clean();
 	outfile.close();
-
+	waitForKeyPress();
     return 0;
 }
 

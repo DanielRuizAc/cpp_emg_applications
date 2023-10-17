@@ -115,12 +115,12 @@
       </SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>Default</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Program Files\boost\boost_1_82_0;C:\Users\maste\OneDrive - Politecnico di Milano\Politecnico di Milano courses\Tesis\VisualPrograms\Cpp_emg_applications\bts_freeemg_manage\Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\local\boost_1_82_0;C:\Users\MADEUC5_4\Documents\Cpp_emg_applications\Cpp_emg_applications\bts_freeemg_manage\Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Program Files\boost\boost_1_82_0\stage\lib;</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\local\boost_1_82_0\stage\lib</AdditionalLibraryDirectories>
     </Link>
     <PreBuildEvent>
       <Command>Call "$(ProjectDir)PreBuild" $(ConfigurationName) "$(ProjectDir)" $(PlatformName)</Command>
@@ -155,7 +155,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="jsonemg.cpp" />
+    <ClCompile Include="Source\jsonemg.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="PostBuild.cmd" />

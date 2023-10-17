@@ -115,7 +115,7 @@
       </SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>Default</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\maste\OneDrive - Politecnico di Milano\Politecnico di Milano courses\Tesis\VisualPrograms\Cpp_emg_applications\bts_freeemg_manage\Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\MADEUC5_4\Documents\Cpp_emg_applications\Cpp_emg_applications\bts_freeemg_manage\Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

@@ -20,7 +20,8 @@ namespace xsens_manage_tools {
 	public:
 		XsStringArray segmentNames;
 		XmeJointArray joints;
-		char* segmentNames_ch[15];
+		// char* segmentNames_ch[15];
+		std::string segmentNames_str[16];
 
 		xsensManager(XsString calibT, XsString Conf);
 		~xsensManager();

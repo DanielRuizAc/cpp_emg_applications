@@ -120,7 +120,7 @@
       </SDLCheck>
       <PreprocessorDefinitions>_UNICODE;UNICODE;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>Default</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Program Files\boost\boost_1_82_0;C:\Program Files\Xsens\MVN SDK 2023.0\SDK Files\x64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\local\boost_1_82_0;C:\Program Files\Xsens\MVN SDK 2023.0\SDK Files\x64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <SupportJustMyCode>false</SupportJustMyCode>
       <Optimization>Disabled</Optimization>
@@ -133,7 +133,7 @@
       <SubSystem>
       </SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Program Files\boost\boost_1_82_0\stage\lib;C:\Program Files\Xsens\MVN SDK 2023.0\SDK Files\x64\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\local\boost_1_82_0\stage\lib;C:\Program Files\Xsens\MVN SDK 2023.0\SDK Files\x64\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>xme64.lib;xstypes64.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention />
