@@ -33,6 +33,7 @@ namespace bts_manage_tools {
 		CoUninitialize();
 
 		DeleteCriticalSection(&(this->g_csObject));
+		printf("done");
 	}
 
 
@@ -63,7 +64,6 @@ namespace bts_manage_tools {
 		{
 			printf("Failed: unable to initialize BioDAQ device on USB COM port %d.\n", this->ptrCOMPort->Number);
 			printf("Press a key to exit...\n");
-			_gettch();
 			return false;
 		}
 
@@ -160,6 +160,7 @@ namespace bts_manage_tools {
 		short unsigned int sens_count = this->ptrSensorViewDictionary->Count;
 		ISensorViewDictionaryEnumPtr ptrSensorViewDictionaryEnum;
 		ptrSensorViewDictionaryEnum = this->ptrSensorViewDictionary->GetEnumerator();
+		this->readable_channels.clear();
 		// ptrSensorViewDictionaryEnum->MoveNext();
 		// move at first item
 		bool bResult;
@@ -170,7 +171,6 @@ namespace bts_manage_tools {
 			{
 				printf("Failed: invalid operation...\n");
 				printf("Press a key to exit...\n");
-				_gettch();
 				return;
 			}
 
@@ -193,6 +193,7 @@ namespace bts_manage_tools {
 			unsigned char labelCode = sensor->LabelCode;
 
 			bool connected = (sensor->GetConnected() == VARIANT_TRUE) ? true : false;
+			if (connected) this->readable_channels.push_back(i);
 			BattLevel batteryLevel = sensor->_BattLevel;
 			int batt_level_num;
 			switch (batteryLevel) {
@@ -221,7 +222,6 @@ namespace bts_manage_tools {
 			printf("EMG sensor: MAC %s, Label code: %d, color: blue [color code: 0x%08x], connected %s, battery level: %d\n",
 				szMACAddressOut, labelCode, color, connected ? "Yes" : "No" , batt_level_num);
 		}
-		_gettch();
 	}
 
 
@@ -234,7 +234,6 @@ namespace bts_manage_tools {
 		{
 			printf("Failed: unable to arm BioDAQ device\n");
 			printf("Press a key to exit...\n");
-			_gettch();
 
 			// roll-back
 			this->ptrBioDAQ->Reset();
@@ -254,7 +253,6 @@ namespace bts_manage_tools {
 		{
 			printf("Failed: unable to arm BioDAQ device\n");
 			printf("Press a key to exit...\n");
-			_gettch();
 
 			// roll-back
 			this->Clean();

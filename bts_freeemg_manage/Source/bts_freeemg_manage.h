@@ -48,7 +48,6 @@ namespace bts_manage_tools {
 		IQueueSinkPtr g_ptrQueueSink;             // Queue sink interface.
 		CRITICAL_SECTION g_csObject;
 		vector<int> active_channels;
-		vector<int> readable_channels;
 
 		static bool _buildMACAddress(char* pInput, char* szAddress);
 		static void charToHex(unsigned char c, char hex[3]);
@@ -56,6 +55,7 @@ namespace bts_manage_tools {
 
 
 	public:
+		vector<int> readable_channels;
 		bts_bm_manager();
 		~bts_bm_manager();
 		bool ConnectionCOMPort(int comNum, BaudRate baud);
