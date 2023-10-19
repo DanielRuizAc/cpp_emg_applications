@@ -78,6 +78,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	printf("Cleaning");
 	btsManager.Clean();
 	printf("Cleaned");
+	btsManager.~bts_bm_manager();
 	
 	try
 	{
@@ -86,19 +87,49 @@ int _tmain(int argc, _TCHAR* argv[])
 		sqlc.Open();
 		// System::String^ q = "INSERT INTO Samples (sample_timestamp, channel, sample_index, sample_value) values (@ts , @ch, @ind, @val)";
 		// System::Data::SqlClient::SqlCommand command(q, % sqlc);
+		System::String^ query_str = "INSERT INTO Samples (sample_timestamp, channel, sample_index, sample_value) values ";
+		bool initial = true;
+		int count_i = 1;
 		for (map<int, vector<bts_manage_tools::sample>>::iterator it3 = complete_vectors.begin(); it3 != complete_vectors.end(); it3++) {
 			for (vector<bts_manage_tools::sample>::iterator it4 = it3->second.begin(); it4 < it3->second.end(); it4++) {
-				System::String^ q = "INSERT INTO Samples (sample_timestamp, channel, sample_index, sample_value) values (@ts , @ch, @ind, @val)";
-				System::Data::SqlClient::SqlCommand command(q, % sqlc);
-				command.Parameters->AddWithValue("@ts", "11-10-25");
-				command.Parameters->AddWithValue("@ch", it3->first);
-				command.Parameters->AddWithValue("@ind", it4->index);
-				command.Parameters->AddWithValue("@val", it4->value);
+				// System::String^ q = "INSERT INTO Samples (sample_timestamp, channel, sample_index, sample_value) values (@ts , @ch, @ind, @val)";
+				System::String^ lin = System::String::Format("({0} , {1}, {2}, {3})", "11-10-25", it3->first, it4->index, it4->value);
+				if (initial) {
+					initial = false;
+					query_str = System::String::Concat(query_str, lin);
+					// System::Console::Write(query_str);
+				}
+				else {
+					query_str = System::String::Concat(query_str, " , ", lin);
+					if (count_i > 999) {
+						System::Data::SqlClient::SqlCommand command(query_str, % sqlc);
+						int ex_rows = command.ExecuteNonQuery();
+						printf("affected rows %d \n", ex_rows);
+						query_str = "INSERT INTO Samples (sample_timestamp, channel, sample_index, sample_value) values ";
+						initial = true;
+						count_i = 0;
+					}
+					// query_str = System::String::Concat(query_str, " , ", lin);
+				}
+				count_i++;
+				// query_str = query_str->Concat("");
+				// System::Data::SqlClient::SqlCommand command(q, % sqlc);
+				// command.Parameters->AddWithValue("@ts", "11-10-25");
+				// command.Parameters->AddWithValue("@ch", it3->first);
+				// command.Parameters->AddWithValue("@ind", it4->index);
+				// command.Parameters->AddWithValue("@val", it4->value);
 
-				int ex_rows = command.ExecuteNonQuery();
+				// int ex_rows = command.ExecuteNonQuery();
 				// printf("affected rows %d", ex_rows);
 			}
 		}
+		if (!initial) {
+			System::Data::SqlClient::SqlCommand command(query_str, % sqlc);
+			int ex_rows = command.ExecuteNonQuery();
+			printf("affected rows %d \n", ex_rows);
+		}
+
+		// System::String^ vals_str = System::String::Concat("","","");
 		// command.Parameters->AddWithValue("@ts", "10-10-25");
 		// command.Parameters->AddWithValue("@ch", 7);
 		// command.Parameters->AddWithValue("@ind", allSamples[500].index);
