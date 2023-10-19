@@ -21,6 +21,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "bts_xsens_implementation", 
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Multifile_xsens_prove", "Multifile_xsens_prove\Multifile_xsens_prove.vcxproj", "{E84E758B-D73C-4498-9FCA-869A5306FC3B}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ConsoleApplication1", "ConsoleApplication1\ConsoleApplication1.vcxproj", "{42D4A3E0-5D02-4ED7-A6AC-69074B034B75}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EMG_send_SQL", "EMG_send_SQL\EMG_send_SQL.vcxproj", "{D96E2B53-03EE-45A8-9020-F889FADFBFEC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -101,6 +105,22 @@ Global
 		{E84E758B-D73C-4498-9FCA-869A5306FC3B}.Release|x64.Build.0 = Release|x64
 		{E84E758B-D73C-4498-9FCA-869A5306FC3B}.Release|x86.ActiveCfg = Release|Win32
 		{E84E758B-D73C-4498-9FCA-869A5306FC3B}.Release|x86.Build.0 = Release|Win32
+		{42D4A3E0-5D02-4ED7-A6AC-69074B034B75}.Debug|x64.ActiveCfg = Debug|x64
+		{42D4A3E0-5D02-4ED7-A6AC-69074B034B75}.Debug|x64.Build.0 = Debug|x64
+		{42D4A3E0-5D02-4ED7-A6AC-69074B034B75}.Debug|x86.ActiveCfg = Debug|Win32
+		{42D4A3E0-5D02-4ED7-A6AC-69074B034B75}.Debug|x86.Build.0 = Debug|Win32
+		{42D4A3E0-5D02-4ED7-A6AC-69074B034B75}.Release|x64.ActiveCfg = Release|x64
+		{42D4A3E0-5D02-4ED7-A6AC-69074B034B75}.Release|x64.Build.0 = Release|x64
+		{42D4A3E0-5D02-4ED7-A6AC-69074B034B75}.Release|x86.ActiveCfg = Release|Win32
+		{42D4A3E0-5D02-4ED7-A6AC-69074B034B75}.Release|x86.Build.0 = Release|Win32
+		{D96E2B53-03EE-45A8-9020-F889FADFBFEC}.Debug|x64.ActiveCfg = Debug|x64
+		{D96E2B53-03EE-45A8-9020-F889FADFBFEC}.Debug|x64.Build.0 = Debug|x64
+		{D96E2B53-03EE-45A8-9020-F889FADFBFEC}.Debug|x86.ActiveCfg = Debug|Win32
+		{D96E2B53-03EE-45A8-9020-F889FADFBFEC}.Debug|x86.Build.0 = Debug|Win32
+		{D96E2B53-03EE-45A8-9020-F889FADFBFEC}.Release|x64.ActiveCfg = Release|x64
+		{D96E2B53-03EE-45A8-9020-F889FADFBFEC}.Release|x64.Build.0 = Release|x64
+		{D96E2B53-03EE-45A8-9020-F889FADFBFEC}.Release|x86.ActiveCfg = Release|Win32
+		{D96E2B53-03EE-45A8-9020-F889FADFBFEC}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
