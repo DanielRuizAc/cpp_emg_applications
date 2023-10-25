@@ -12,7 +12,6 @@
 #include <atomic>
 #include <iostream>
 
-using namespace system::
 
 namespace xsens_manage_tools {
 
