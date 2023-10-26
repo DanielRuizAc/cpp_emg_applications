@@ -17,7 +17,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	bts_manage_tools::bts_bm_manager btsManager;
 
 	printf("Create a USB COM port where BioDAQ device is connected...\n");
-	if (!btsManager.ConnectionCOMPort(3)) {
+	if (!btsManager.ConnectionCOMPort(4)) {
 		printf("Problem connecting device");
 		_gettch();
 		return 0;
