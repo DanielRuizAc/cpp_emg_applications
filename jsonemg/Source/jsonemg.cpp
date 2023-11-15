@@ -72,7 +72,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	boost::asio::steady_timer t(io);
 	t.expires_after(boost::asio::chrono::milliseconds(100));
-	for (int i = 0; i < 300; i++) {
+	for (int i = 0; i < 600*4; i++) {
 		boost::json::object json_batch;
 		auto json_ts = boost::chrono::high_resolution_clock::now();
 		json_batch["TimeStamp"] = boost::chrono::to_string(json_ts);

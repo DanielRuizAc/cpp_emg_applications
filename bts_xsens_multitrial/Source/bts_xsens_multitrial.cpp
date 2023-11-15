@@ -198,6 +198,7 @@ int main()
 	case 'y':
 	case 'Y':
 		maketrial = true;
+		XsTime::msleep(2000);
 		break;
 	default:
 		maketrial = false;
@@ -221,7 +222,7 @@ int main()
 		outfile.open(s_tr_time + ".txt");
 		xsensManager.CreateMVNFile(XsString(s_tr_time) + XsString(".mvn"));
 
-		std::cout << "Starting a 2 minutes trial" << std::endl;
+		std::cout << "Starting a 4 minutes trial" << std::endl;
 
 		printf("Arming and starting BioDAQ device...\n");
 		if (!btsManager.ArmStart()) {
@@ -237,10 +238,10 @@ int main()
 		xsensManager.ToogleTimePoseMode();
 
 		boost::asio::steady_timer t(io);
-		t.expires_after(boost::asio::chrono::milliseconds(200));
+		t.expires_after(boost::asio::chrono::milliseconds(400));
 		t.wait();
 
-		for (int counter = 0; counter < 2*300; counter++) {
+		for (int counter = 0; counter < 7*600; counter++) {
 			auto batch_ts = boost::chrono::high_resolution_clock::now();
 			boost::json::object bts_batch;
 			boost::thread th(&thread_dequeue, &bts_batch, btsManager, initial);
@@ -261,7 +262,7 @@ int main()
 
 			outfile << boost::json::serialize(json_batch) << std::endl;
 			t.wait();
-			t.expires_at(t.expires_at() + boost::asio::chrono::milliseconds(200));
+			t.expires_at(t.expires_at() + boost::asio::chrono::milliseconds(100));
 		}
 		if (!btsManager.Stop()) {
 			printf("Problem stopping");
@@ -277,6 +278,7 @@ int main()
 		case 'y':
 		case 'Y':
 			maketrial = true;
+			XsTime::msleep(2000);
 			break;
 		default:
 			maketrial = false;
