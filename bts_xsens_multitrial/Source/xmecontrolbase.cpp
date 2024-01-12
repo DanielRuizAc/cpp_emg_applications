@@ -218,13 +218,14 @@ void XmeControlBaseSC::onLowBatteryLevel(XmeControl*)
 void XmeControlBaseSC::onPoseReady(XmeControl* xme)
 {
 	// Make sure only one thread can acces m_lastPose, since the callback will be called from the xme thread
-	std::lock_guard<std::mutex> lock(m_poseMutex);
+	/*std::lock_guard<std::mutex> lock(m_poseMutex);
 	if (readSignal) this->unread_poses.clear();
 	readSignal = false;
 	XmePose lastPose = m_xmeControl->pose(XME_LAST_AVAILABLE_FRAME);
-
 	if (!lastPose.empty())
 		this->unread_poses.push_back(lastPose);
+
+	*/
 }
 
 void XmeControlBaseSC::onProcessingComplete(XmeControl*)

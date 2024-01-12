@@ -23,6 +23,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Multifile_xsens_prove", "Mu
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "bts_xsens_multitrial", "bts_xsens_multitrial\bts_xsens_multitrial.vcxproj", "{89CF4030-9F04-4603-977E-44292CE7CC1D}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "bts_incode_trials", "bts_incode_trials\bts_incode_trials.vcxproj", "{D6FC1999-0DEB-4DC1-A957-39C136011C7A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -111,6 +113,14 @@ Global
 		{89CF4030-9F04-4603-977E-44292CE7CC1D}.Release|x64.Build.0 = Release|x64
 		{89CF4030-9F04-4603-977E-44292CE7CC1D}.Release|x86.ActiveCfg = Release|Win32
 		{89CF4030-9F04-4603-977E-44292CE7CC1D}.Release|x86.Build.0 = Release|Win32
+		{D6FC1999-0DEB-4DC1-A957-39C136011C7A}.Debug|x64.ActiveCfg = Debug|x64
+		{D6FC1999-0DEB-4DC1-A957-39C136011C7A}.Debug|x64.Build.0 = Debug|x64
+		{D6FC1999-0DEB-4DC1-A957-39C136011C7A}.Debug|x86.ActiveCfg = Debug|Win32
+		{D6FC1999-0DEB-4DC1-A957-39C136011C7A}.Debug|x86.Build.0 = Debug|Win32
+		{D6FC1999-0DEB-4DC1-A957-39C136011C7A}.Release|x64.ActiveCfg = Release|x64
+		{D6FC1999-0DEB-4DC1-A957-39C136011C7A}.Release|x64.Build.0 = Release|x64
+		{D6FC1999-0DEB-4DC1-A957-39C136011C7A}.Release|x86.ActiveCfg = Release|Win32
+		{D6FC1999-0DEB-4DC1-A957-39C136011C7A}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -115,9 +115,9 @@ boost::json::object Obtainframe(XmePose const& p, std::string segNames[], XmeJoi
 }
 
 
-void thread_dequeue(boost::json::object* json_msg, bts_manage_tools::bts_bm_manager& Mngr, boost::chrono::steady_clock::time_point initial) {
+void thread_dequeue(boost::json::object* json_msg, bts_manage_tools::bts_bm_manager& Mngr, boost::chrono::steady_clock::time_point initial, long last_index) {
 	auto batch_ts = boost::chrono::high_resolution_clock::now();
-	bts_manage_tools::batch queue_batch = Mngr.CompleteDequeue();
+	bts_manage_tools::batch queue_batch = Mngr.Read_basic(last_index, 500); //Mngr.CompleteDequeue();
 	boost::json::object bts_batch = CreateJsonBatch(queue_batch, batch_ts, initial);
 	*json_msg = bts_batch;
 	printf("Duration %d \n", boost::chrono::duration_cast<boost::chrono::milliseconds>(boost::chrono::high_resolution_clock::now() - batch_ts).count());
@@ -174,6 +174,7 @@ int main()
 		return 0;
 	}
 
+	/*
 	printf("Configuring the parameters of the data aquisition\n");
 	if (!btsManager.ConfigureAquisition(true, 25)) {
 		printf("Problem configuring the aquisition");
@@ -181,6 +182,8 @@ int main()
 		waitForKeyPress();
 		return 0;
 	}
+
+	*/
 
 	Sleep(1000);
 
@@ -238,14 +241,14 @@ int main()
 		xsensManager.ToogleTimePoseMode();
 
 		boost::asio::steady_timer t(io);
-		t.expires_after(boost::asio::chrono::milliseconds(400));
+		t.expires_after(boost::asio::chrono::milliseconds(2000));
 		t.wait();
 
-		for (int counter = 0; counter < 7*600; counter++) {
+		for (int counter = 0; counter < 7*600/5; counter++) {
 			auto batch_ts = boost::chrono::high_resolution_clock::now();
 			boost::json::object bts_batch;
-			boost::thread th(&thread_dequeue, &bts_batch, btsManager, initial);
-			std::vector<XmePose> records = xsensManager.ReadUnreadPoses();
+			boost::thread th(&thread_dequeue, &bts_batch, btsManager, initial, counter*500);
+			std::vector<XmePose> records = xsensManager.ReadUnreadPoses(counter*50, 50); // xsensManager.ReadUnreadPoses();
 			boost::json::object xsens_batch;
 			boost::json::array data_array;
 
@@ -262,7 +265,7 @@ int main()
 
 			outfile << boost::json::serialize(json_batch) << std::endl;
 			t.wait();
-			t.expires_at(t.expires_at() + boost::asio::chrono::milliseconds(100));
+			t.expires_at(t.expires_at() + boost::asio::chrono::milliseconds(500));
 		}
 		if (!btsManager.Stop()) {
 			printf("Problem stopping");

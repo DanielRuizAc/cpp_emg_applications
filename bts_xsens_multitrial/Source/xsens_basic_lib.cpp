@@ -271,6 +271,15 @@ namespace xsens_manage_tools {
 		}
 	}
 
+	std::vector<XmePose> xsensManager::ReadUnreadPoses(int lastFrame, int n_frames) {
+		std::vector<XmePose> unreadPs;
+		printf(" XME_LAST_AVAILABLE_FRAME \n");
+		for (int i = 0; i < n_frames; i++) {
+			unreadPs.push_back(this->getXmeControl().pose(lastFrame + i));
+		}
+		return unreadPs;
+	}
+
 
 	void xsensManager::displayCalibrationResults(const XmeCalibrationResult& calibrationResult)
 	{
@@ -355,6 +364,7 @@ namespace xsens_manage_tools {
 		{
 			printf("Saving MVN file.\n");
 			this->instance->xme().saveFile();
+			XsTime::msleep(500);
 			printf("Closing MVN file.\n");
 			this->instance->xme().closeFile();
 		}

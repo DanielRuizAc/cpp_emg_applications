@@ -36,6 +36,7 @@ namespace xsens_manage_tools {
 		void Calibrate();
 		bool ToogleTimePoseMode();
 		std::vector<XmePose> ReadUnreadPoses();
+		std::vector<XmePose> ReadUnreadPoses(int lastFrame, int n_frames);
 
 		void CreateMVNFile(XsString const fileName);
 		void OpenMVNFile(XsString const fileName);
